@@ -1,0 +1,84 @@
+/* Style for body */
+body {
+    background-image: url("../img/background.jpg");
+    background-size: cover;
+    overflow: hidden;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+/* Style for main div */
+#mainBox {
+    background-color: lightgrey;
+    width: 95%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);
+    border-radius: 15px;
+}
+
+#canvasWrapper{
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+}
+
+#buttonBar{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for Chart and chart controls */
+#humidityChartCanvas {
+    align-self: start;
+}
+
+#graphControls{
+    border-top: black 1px solid;
+    padding-top: 15px;
+}
+
+.datepicker{
+    background-color: #003758;
+    border: 1px #00AFD3 solid;
+    color-scheme: dark;
+    color: white;
+    font-size: 20px;
+    padding: 2px;
+}
+
+.dateLabels{
+    font-size: 20px;
+    color: #003758;
+}
+
+/* Main style for all buttons */
+.mainButton {
+    background-color: #003758;
+    border: 1px #00AFD3 solid;
+    border-radius: 5px;
+    color: white;
+    font-size: 20px;
+}
+
+.mainButton:hover {
+    background-color: #007a94 !important;
+}
+
+.mainButton:active {
+    background-color: #00586a !important;
+}
+
+/* Style for notification button */
+#notifyButton {
+    border-radius: 50% !important;
+    width: 70%;
+    padding: 4px;
+    margin: 5px;
+}

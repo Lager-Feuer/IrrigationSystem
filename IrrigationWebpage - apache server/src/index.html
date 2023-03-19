@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Irrigation Web-App</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Janik Ahlers">
+    <meta property="og:title" content="Irrigation Web-App">
+    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:url" content="https://irrigationsystem.westeurope.cloudapp.azure.com/">
+    <meta name="description" content="A web-app, that generates and shows a graph of humidity history. \
+    The data is received from an arduino irrigation system">
+    <meta property="og:description" content="A web-app, that generates and shows a graph of humidity history. \
+    The data is received from an arduino irrigation system">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+</head>
+
+<body>
+    <div id="mainBox">
+        <div id="canvasWrapper">
+            <canvas id="humidityChartCanvas"></canvas>
+            <div id="buttonBar">
+                <input id="openSettingsButton" class="mainButton" type="image" src="img/settingsIcon.png" onclick="openSettings()" />
+                <input id="notifyButton" class="mainButton" type="image" src="img/notifyIcon.png" onclick="notifyButtonClick()" />
+            </div>
+        </div>
+        <form id="graphControls">
+            <label for="fromTimestamp" class="dateLabels">Von:</label>
+            <input type="datetime-local" id="fromTimestamp" name="fromTimestamp" class="datepicker">
+            <label for="toTimestamp" class="dateLabels">bis:</label>
+            <input type="datetime-local" id="toTimestamp" name="toTimestamp" class="datepicker">
+            <input type="button" value="Aktualisieren" onclick="updateChart()" class="mainButton">
+        </form>
+    </div>
+
+    <div id="settings" class="settings">
+        <div class="settingsContent">
+          <h1>Settings</h1>
+          <form>
+            <div class="settingsRow">
+                <label for="syncInterval">Synchronisierungs-Interval:</label>
+                <input type="number" min="0" max="30" id="syncInterval" name="syncInterval" placeholder="0-30 in seconds">
+            </div>
+            
+            <div class="settingsRow">
+                <label for="lowerTriggerValue">Unterer Schwellenwert, um die Pumpe einzuschalten:</label>
+                <input type="number" min="0" max="100" id="lowerTriggerValue" name="lowerTriggerValue" placeholder="0-100 in %">
+            </div>
+
+            <div class="settingsRow">
+                <label for="upperTriggerValue">Oberer Schwellenwert, um die Pumpe auszuschalten:</label>
+                <input type="number" min="0" max="100" id="upperTriggerValue" name="upperTriggerValue" placeholder="0-100 in %">
+            </div>
+
+            <div class="settingsRow">
+                <label for="notificationTriggervalue">Schwellenwert für die Benachrichtigungen:</label>
+                <input type="number" min="0" max="100" id="notificationTriggervalue" name="notificationTriggervalue" placeholder="0-100 in %">
+            </div>
+
+            <div class="settingsDivider"></div>
+            <h3>Wartungswerte (Read-only)</h3>
+                
+            <div class="settingsRow">
+                <label for="pump1Activated">Pumpe 1 eingeschaltet:</label>
+                <input type="text" id="pump1Activated" name="pump1Activated" readonly>
+            </div>
+            
+            <div class="settingsRow">
+                <label for="pump2Activated">Pumpe 2 eingeschaltet:</label>
+                <input type="text" id="pump2Activated" name="pump2Activated" readonly>
+            </div>
+                
+            <div class="settingsRow">
+                <label for="lastSentMoistureLvl">Letzter gesendeter Feuchtigkeitswert in Prozent (%):</label>
+                <input type="text" id="lastSentMoistureLvl" name="lastSentMoistureLvl" readonly>
+            </div>
+            
+            <input type="button" class="mainButton" value="Aktualisieren" onclick="loadSettings()">
+
+            <div class="settingsDivider"></div>
+            <h3>Bewässerungssystem steuern</h3>
+
+            <div class="settingsRow">
+                <label for="maintenanceActive">Wartungsmodus einschalten:</label>
+                <input type="checkbox" id="maintenanceActive" name="maintenanceActive" onchange="changeMaintenance()">
+            </div>
+
+            <div class="settingsRow">
+                <label for="testNotifications">Benachrichtigungen immer senden An|Aus:</label>
+                <input type="checkbox" id="testNotifications" name="testNotifications" disabled>
+            </div>
+
+            <div class="settingsRow">
+                <label for="pump1Force">Pumpe 1 An|Aus:</label>
+                <input type="checkbox" id="pump1Force" name="pump1Force" disabled>
+            </div>
+
+            <div class="settingsRow">
+                <label for="pump2Force">Pumpe 2 An|Aus:</label>
+                <input type="checkbox" id="pump2Force" name="pump2Force" disabled>
+            </div>
+      
+            <input type="button" id="saveSettingsBtn" class="mainButton" value="Speichern" onclick="saveSettings()">
+          </form>
+        </div>
+      </div>
+    
+    <script src="js/settings.js"></script>
+    <script src="js/humidityChart.js"></script>
+    <script src="js/pnotifications.js"></script>
+</body>
+
+</html>
